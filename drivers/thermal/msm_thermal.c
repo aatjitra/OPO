@@ -47,7 +47,10 @@
 #define MONITOR_ALL_TSENS -1
 #define BYTES_PER_FUSE_ROW  8
 #define MAX_EFUSE_VALUE  16
+<<<<<<< HEAD
 #define THERM_SECURE_BITE_CMD 8
+=======
+>>>>>>> 817ce72... msm: thermal: Add support for cpu temp limit recommendation for SoC
 
 static struct msm_thermal_data msm_thermal_info;
 static struct delayed_work check_temp_work;
