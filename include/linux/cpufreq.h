@@ -386,7 +386,13 @@ extern struct cpufreq_governor cpufreq_gov_smartmax;
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_INTELLIACTIVE)
 extern struct cpufreq_governor cpufreq_gov_intelliactive;
 #define CPUFREQ_DEFAULT_GOVERNOR        (&cpufreq_gov_intelliactive)
+<<<<<<< HEAD
 >>>>>>> 43ace2f... cpufreq: intelliactive: added new @faux123 governor
+=======
+#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_INTELLIMM)
+extern struct cpufreq_governor cpufreq_gov_intellimm;
+#define CPUFREQ_DEFAULT_GOVERNOR        (&cpufreq_gov_intellimm)
+>>>>>>> 05f80ea... cpufreq: intellimm: added new @faux123 governor
 #endif
 
 

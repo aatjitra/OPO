@@ -21,7 +21,11 @@ obj-$(CONFIG_CPU_FREQ_GOV_SMARTMAX)     += cpufreq_smartmax.o
 obj-$(CONFIG_CPU_FREQ_GOV_INTERACTIVE)	+= cpufreq_interactive_pro.o cpufreq_interactive.o
 obj-$(CONFIG_CPU_FREQ_GOV_SLIM)		+= cpufreq_slim.o
 obj-$(CONFIG_CPU_FREQ_GOV_INTELLIACTIVE)+= cpufreq_intelliactive.o
+<<<<<<< HEAD
 >>>>>>> 43ace2f... cpufreq: intelliactive: added new @faux123 governor
+=======
+obj-$(CONFIG_CPU_FREQ_GOV_INTELLIMM)	+= cpufreq_intellimm.o
+>>>>>>> 05f80ea... cpufreq: intellimm: added new @faux123 governor
 
 # CPUfreq cross-arch helpers
 obj-$(CONFIG_CPU_FREQ_TABLE)		+= freq_table.o
