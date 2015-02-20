@@ -65,7 +65,7 @@ static int bq24196_read_i2c(struct bq24196_device_info *di,u8 reg,u8 length,char
 	retval = i2c_smbus_read_i2c_block_data(client,reg,length,&buf[0]);
 	mutex_unlock(&bq24196_di->i2c_lock);
 	if( retval < 0){
-		pr_info("bq24196 read i2c error\n");
+		pr_debug("bq24196 read i2c error\n");
 	}
 	return retval;
 }
@@ -77,7 +77,7 @@ static int bq24196_write_i2c(struct bq24196_device_info *di,u8 reg,u8 length,cha
 	retval = i2c_smbus_write_i2c_block_data(client,reg,length,&buf[0]);
 	mutex_unlock(&bq24196_di->i2c_lock);
 	if( retval < 0){
-		pr_info("bq24196 write i2c error\n");
+		pr_debug("bq24196 write i2c error\n");
 	}
 	return retval;
 }
@@ -118,7 +118,7 @@ static int
 bq24196_ibatmax_set(struct bq24196_device_info *di, int chg_current)
 {
 	u8 value = 0;
-	pr_info("%s chg_current:%d\n",__func__,chg_current);
+	pr_debug("%s chg_current:%d\n",__func__,chg_current);
 	if(chg_current == 200) {
 		value = (1024 - BQ24196_CHG_IBATMAX_MIN)/64;
 		value <<= 2;
@@ -139,7 +139,7 @@ bq24196_ibatmax_set(struct bq24196_device_info *di, int chg_current)
 
 		value = (chg_current - BQ24196_CHG_IBATMAX_MIN)/64;
 		value <<= 2;
-		//pr_info("%s value:0x%x\n",__func__,value);
+		//pr_debug("%s value:0x%x\n",__func__,value);
 		return bq24196_chg_masked_write(di,CHARGE_CURRENT_CTRL,BQ24196_IBATMAX_BITS,value,1);
 	}
 }
@@ -152,7 +152,7 @@ bq24196_ibatterm_set(struct bq24196_device_info *di, int term_current)
 
 	if( (term_current < BQ24196_TERM_CURR_MIN) || (term_current > BQ24196_TERM_CURR_MAX)){
 		term_current = BQ24196_TERM_CURR_MIN;
-		//pr_info("%s bad term_current,set to default 128mA\n",__func__);
+		//pr_debug("%s bad term_current,set to default 128mA\n",__func__);
 	}
 
 	value = (term_current - BQ24196_TERM_CURR_MIN)/128;
@@ -164,10 +164,10 @@ static int
 bq24196_iusbmax_set(struct bq24196_device_info *di, int mA)
 {
 	u8 value = 0;
-	pr_info("%s mA:%d\n",__func__,mA);
+	pr_debug("%s mA:%d\n",__func__,mA);
 
 	if( (mA < BQ24196_CHG_IUSBMAX_MIN) || ( mA > BQ24196_CHG_IUSBMAX_MAX )){
-		pr_info("bad iusbmA:%d asked to set\n",mA);
+		pr_debug("bad iusbmA:%d asked to set\n",mA);
 		return -EINVAL;
 	}
 
@@ -218,7 +218,7 @@ static int
 bq24196_vddmax_set(struct bq24196_device_info *di, int voltage)
 {
 	u8 value = 0;
-	pr_info("%s voltage:%d\n",__func__,voltage);
+	pr_debug("%s voltage:%d\n",__func__,voltage);
 	
 	if (voltage < BQ24196_CHG_VDDMAX_MIN
 			|| voltage > BQ24196_CHG_VDDMAX_MAX) {
@@ -239,7 +239,7 @@ static int
 bq24196_vinmin_set(struct bq24196_device_info *di, int voltage)
 {
 	u8 value = 0;
-	//pr_info("%s voltage:%d\n",__func__,voltage);
+	//pr_debug("%s voltage:%d\n",__func__,voltage);
 	if (voltage < BQ24196_VINMIN_MIN
 			|| voltage > BQ24196_VINMIN_MAX) {
 		pr_err("bad vinmin mV=%d asked to set\n", voltage);
@@ -316,7 +316,7 @@ static int
 bq24196_charge_en(struct bq24196_device_info *di, int enable)
 {
 	u8 value = 0;
-	pr_info("%s enable:%d\n",__func__,enable);
+	pr_debug("%s enable:%d\n",__func__,enable);
 
 	if( enable == 1 )	//enable charge
 		value = 0x10;
@@ -351,7 +351,7 @@ static int
 bq24196_usb_suspend_enable(struct bq24196_device_info *di,int enable)
 {
 	u8 value = 0x0;
-	pr_info("%s enable:%d\n",__func__,enable);
+	pr_debug("%s enable:%d\n",__func__,enable);
 	if(enable)
 		value = 0x80;
 	else
@@ -462,7 +462,7 @@ static void bq24196_hw_config_init(struct bq24196_device_info *di)
 	//FAULT_REG need to read twice
 	bq24196_read(di,FAULT_REG,1,&value_buf[1]);
 	bq24196_read(di,FAULT_REG,1,&value_buf[1]);
-	pr_info("bq24196 SYS_STS:0x%x,fault_reg:0x%x\n",value_buf[0],value_buf[1]);
+	pr_debug("bq24196 SYS_STS:0x%x,fault_reg:0x%x\n",value_buf[0],value_buf[1]);
 	bq24196_chg_regs_reset(1);	//reset all regs to default
 	bq24196_chg_wdt_set(0);		//disable wdt
 	qpnp_external_charger_register(&bq24196_charger);
